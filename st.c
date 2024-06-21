@@ -1083,6 +1083,7 @@ kscrolldown(const Arg* a)
 	}
 }
 
+void 
 newterm(const Arg* a)
 {
 	int res;
@@ -1104,6 +1105,21 @@ newterm(const Arg* a)
 		}
 	default:
 		wait(NULL);
+	}
+}
+
+void
+kscrollup(const Arg* a)
+{
+	int n = a->i;
+
+	if (n < 0)
+		n = term.row + n;
+
+	if (term.scr <= HISTSIZE-n) {
+		term.scr += n;
+		selscroll(0, n);
+		tfulldirt();
 	}
 }
 
